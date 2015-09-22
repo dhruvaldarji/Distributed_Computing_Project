@@ -3,10 +3,10 @@
 
     public class TCPClient {
 
-        private static String ROUTER_NAME = "localhost";
+        private static String ROUTER_NAME = "192.168.1.5";
         private static int PORT = 5556;
-        private static String SERVER_ADDRESS = "10.5.2.109";
-        private static String INPUT_FILE = "file.txt";
+        private static String SERVER_ADDRESS = "192.168.1.5";
+        private static String INPUT_FILE = "src/file.txt";
 
        public static void main(String[] args) throws IOException {
       	

@@ -5,7 +5,7 @@
 
         private static String SERVER_ROUTER_NAME = "localhost";
         private static int PORT = 5556;
-        private static String CLIENT_ADDRESS = "10.5.3.196";
+        private static String CLIENT_ADDRESS = "192.168.1.12";
 
        public static void main(String[] args) throws IOException {
       	
