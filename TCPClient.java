@@ -3,10 +3,12 @@ import java.net.*;
 
 public class TCPClient {
 
-    private static String ROUTER_NAME = "192.168.1.5";
+    private static String ROUTER_NAME = "10.99.23.85";
     private static int PORT = 5556;
-    private static String SERVER_ADDRESS = "192.168.1.5";
+    private static String SERVER_ADDRESS = "10.99.11.8";
     private static String INPUT_FILE = "src/file.txt";
+
+    private static Stats stat = new Stats();
 
     public static void main(String[] args) throws IOException {
 
@@ -50,19 +52,30 @@ public class TCPClient {
         // Communication while loop
         while ((fromServer = in.readLine()) != null) {
             System.out.println("Server: " + fromServer);
+            stat.getTransmissionInSizes().add(fromServer.length());
             t1 = System.currentTimeMillis();
-            if (fromServer.equals("Bye.")) // exit statement
+            if (fromServer.equals("Bye.")) {// exit statement
                 break;
+            }
+
             t = t1 - t0;
+            stat.getTransmissionTimes().add(t);
+
             System.out.println("Cycle time: " + t);
 
             fromUser = fromFile.readLine(); // reading strings from a file
             if (fromUser != null) {
                 System.out.println("Client: " + fromUser);
+                stat.getTransmissionOutSizes().add(fromUser.length());
                 out.println(fromUser); // sending the strings to the Server via ServerRouter
                 t0 = System.currentTimeMillis();
             }
         }
+
+        stat.ComputeAverages();
+
+        System.out.println("\n"+stat.toString());
+
 
         // closing connections
         out.close();
