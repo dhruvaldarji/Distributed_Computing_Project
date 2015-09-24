@@ -5,7 +5,7 @@ public class TCPServer {
 
     private static String SERVER_ROUTER_NAME = "10.99.26.144";
     private static int PORT = 5556;
-    private static String CLIENT_ADDRESS = "10.99.4.140";
+    private static String CLIENT_ADDRESS = "10.99.26.144";
 
     public static void main(String[] args) throws IOException {
 
