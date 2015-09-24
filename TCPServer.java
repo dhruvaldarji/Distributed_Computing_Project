@@ -3,9 +3,9 @@ import java.net.*;
 
 public class TCPServer {
 
-    private static String SERVER_ROUTER_NAME = "127.0.0.1";
+    private static String SERVER_ROUTER_NAME = "10.99.26.144";
     private static int PORT = 5556;
-    private static String CLIENT_ADDRESS = "192.168.1.12";
+    private static String CLIENT_ADDRESS = "10.99.4.140";
 
     public static void main(String[] args) throws IOException {
 
@@ -44,8 +44,11 @@ public class TCPServer {
         // Communication while loop
         while ((fromClient = in.readLine()) != null) {
             System.out.println("Client said: " + fromClient);
-            if (fromClient.equals("Bye.")) // exit statement
-                break;
+            if (fromClient.equals("Bye.")){
+                out.println("Bye.");
+                break;      // exit statement
+            }
+
             fromServer = fromClient.toUpperCase(); // converting received message to upper case
             System.out.println("Server said: " + fromServer);
             out.println(fromServer); // sending the converted message back to the Client via ServerRouter
