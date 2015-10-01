@@ -3,9 +3,9 @@ import java.net.*;
 
 public class TCPClient {
 
-    private static String ROUTER_NAME = "10.99.23.85";
+    private static String ROUTER_NAME = "10.99.19.171";
     private static int PORT = 5556;
-    private static String SERVER_ADDRESS = "10.99.11.8";
+    private static String SERVER_ADDRESS = "10.99.25.224";
     private static String INPUT_FILE = "src/file.txt";
 
     private static Stats stat = new Stats();

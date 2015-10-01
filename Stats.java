@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -107,6 +109,27 @@ public class Stats {
 
     @Override
     public String toString() {
+        try
+        {
+            FileWriter writer = new FileWriter("src/data.csv", true);
+
+            writer.append("\n");
+
+            writer.append(getAverageTransmissionInSize() + ",");
+
+            writer.append(getAverageTransmissionOutSize() + ",");
+
+
+            writer.append(getAverageTransmissionTime() + ",");
+            //generate whatever data you want
+
+            writer.flush();
+            writer.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
         return "Stats {" +  "\n" +
                 "Average Transmission In Size: " + getAverageTransmissionInSize() + " chars.\n" +
                 "Average Transmission Out Size: " + getAverageTransmissionOutSize() +  " chars.\n" +
