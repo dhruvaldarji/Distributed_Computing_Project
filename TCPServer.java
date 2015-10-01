@@ -58,6 +58,7 @@ public class TCPServer {
         out.close();
         in.close();
         Socket.close();
+
         System.exit(0);
     }
 }
