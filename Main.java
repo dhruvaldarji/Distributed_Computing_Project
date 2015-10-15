@@ -9,6 +9,11 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
+    public static String dhruvalIP = "10.99.10.214";
+    public static String deionIP = "10.99.2.181";
+    public static String mirelaIP = "10.99.27.97";
+    public static String inputFile = "src/file.txt";
+
     private static Scanner in;
     private static String user = "";
 
@@ -62,9 +67,9 @@ public class Main{
     private static void server() throws IOException{
         System.out.println("Running Server...");
 
-        String SERVER_ROUTER_NAME = "10.99.10.214";
+        String SERVER_ROUTER_NAME = dhruvalIP;
         int PORT = 5556;
-        String CLIENT_ADDRESS = "10.99.27.97";
+        String CLIENT_ADDRESS = mirelaIP;
 
         server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
         server.run();
@@ -73,10 +78,10 @@ public class Main{
     private static void client()throws IOException{
         System.out.println("Running Client...");
 
-        String SERVER_ROUTER_NAME = "10.99.10.214";
+        String SERVER_ROUTER_NAME = dhruvalIP;
         int PORT = 5556;
-        String SERVER_ADDRESS = "10.99.2.181";
-        String INPUT_FILE = "src/file.txt";
+        String SERVER_ADDRESS = deionIP;
+        String INPUT_FILE = inputFile;
 
         client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
         client.run();
@@ -87,9 +92,9 @@ public class Main{
         for(int i = 0; i < 100; i ++){
             System.out.println("Running Server100...");
 
-            String SERVER_ROUTER_NAME = "10.99.10.214";
+            String SERVER_ROUTER_NAME = dhruvalIP;
             int PORT = 5556;
-            String CLIENT_ADDRESS = "10.99.27.97";
+            String CLIENT_ADDRESS = deionIP;
 
             server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
             server.run();
@@ -100,10 +105,10 @@ public class Main{
         for(int i = 0; i < 100; i ++){
             System.out.println("Running Client100...");
 
-            String SERVER_ROUTER_NAME = "10.99.10.214";
+            String SERVER_ROUTER_NAME = dhruvalIP;
             int PORT = 5556;
-            String SERVER_ADDRESS = "10.99.2.181";
-            String INPUT_FILE = "src/file.txt";
+            String SERVER_ADDRESS = mirelaIP;
+            String INPUT_FILE = inputFile;
 
             client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
             client.run();
