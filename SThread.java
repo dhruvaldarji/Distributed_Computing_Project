@@ -9,7 +9,7 @@ public class SThread extends Thread {
     private BufferedReader in; // reader (for reading from the machine connected to)
     private String inputLine, outputLine, destination, addr; // communication strings
     private Socket outSocket; // socket for communicating with a destination
-    private int ind; // indext in the routing table
+    private int ind; // index in the routing table
 
     // Constructor
     SThread(Object[][] Table, Socket toClient, int index) throws IOException {

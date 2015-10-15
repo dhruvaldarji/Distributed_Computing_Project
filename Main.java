@@ -21,10 +21,11 @@ public class Main{
         int answer = -1;
 
         if(user.startsWith("r")) answer = 0;
-        else if (user.startsWith("s")) answer = 1;
-        else if (user.startsWith("c")) answer = 2;
         else if (user.startsWith("s100")) answer = 3;
         else if (user.startsWith("c100")) answer = 4;
+        else if (user.startsWith("s")) answer = 1;
+        else if (user.startsWith("c")) answer = 2;
+
 
         switch(answer){
             case 0 :
@@ -36,7 +37,7 @@ public class Main{
             case 2 :
                 client();
                 break;
-            case 3 :
+            case 3:
                 server100();
                 break;
             case 4 :
@@ -84,7 +85,7 @@ public class Main{
 
     private static void server100() throws IOException {
         for(int i = 0; i < 100; i ++){
-            System.out.println("Running Server...");
+            System.out.println("Running Server100...");
 
             String SERVER_ROUTER_NAME = "10.99.10.214";
             int PORT = 5556;
@@ -97,7 +98,7 @@ public class Main{
 
     private static void client100() throws IOException {
         for(int i = 0; i < 100; i ++){
-            System.out.println("Running Client...");
+            System.out.println("Running Client100...");
 
             String SERVER_ROUTER_NAME = "10.99.10.214";
             int PORT = 5556;
