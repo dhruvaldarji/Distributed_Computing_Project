@@ -23,6 +23,8 @@ public class Main{
         if(user.startsWith("r")) answer = 0;
         else if (user.startsWith("s")) answer = 1;
         else if (user.startsWith("c")) answer = 2;
+        else if (user.startsWith("s100")) answer = 3;
+        else if (user.startsWith("c100")) answer = 4;
 
         switch(answer){
             case 0 :
@@ -33,6 +35,12 @@ public class Main{
                 break;
             case 2 :
                 client();
+                break;
+            case 3 :
+                server100();
+                break;
+            case 4 :
+                client100();
                 break;
             default :
                 System.out.println("I don't understand! BYE!!!");
