@@ -55,7 +55,7 @@ public class Main{
 
         String SERVER_ROUTER_NAME = "10.99.10.214";
         int PORT = 5556;
-        String CLIENT_ADDRESS = "10.99.10.214";
+        String CLIENT_ADDRESS = "10.99.27.97";
 
         server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
         server.run();
@@ -64,12 +64,40 @@ public class Main{
     private static void client()throws IOException{
         System.out.println("Running Client...");
 
-        String ROUTER_NAME = "10.99.10.214";
+        String SERVER_ROUTER_NAME = "10.99.10.214";
         int PORT = 5556;
-        String SERVER_ADDRESS = "10.99.10.214";
+        String SERVER_ADDRESS = "10.99.2.181";
         String INPUT_FILE = "src/file.txt";
 
-        client = new TCPClient(ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
+        client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
         client.run();
+    }
+
+
+    private static void server100() throws IOException {
+        for(int i = 0; i < 100; i ++){
+            System.out.println("Running Server...");
+
+            String SERVER_ROUTER_NAME = "10.99.10.214";
+            int PORT = 5556;
+            String CLIENT_ADDRESS = "10.99.27.97";
+
+            server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
+            server.run();
+        }
+    }
+
+    private static void client100() throws IOException {
+        for(int i = 0; i < 100; i ++){
+            System.out.println("Running Client...");
+
+            String SERVER_ROUTER_NAME = "10.99.10.214";
+            int PORT = 5556;
+            String SERVER_ADDRESS = "10.99.2.181";
+            String INPUT_FILE = "src/file.txt";
+
+            client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
+            client.run();
+        }
     }
 }
