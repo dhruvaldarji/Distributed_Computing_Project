@@ -3,34 +3,32 @@ import java.net.*;
 
 public class TCPClient {
 
-    private static String ROUTER_NAME = "10.99.19.171";
-    private static int PORT = 5556;
-    private static String SERVER_ADDRESS = "10.99.25.224";
-    private static String INPUT_FILE = "src/file.txt";
+    private String ROUTER_NAME;
+    private int PORT;
+    private String SERVER_ADDRESS;
+    private String INPUT_FILE;
 
-    private static Stats stat;
+    private Stats stat;
 
     // Variables for setting up connection and communication
-    private static Socket Socket;// socket to connect with ServerRouter
-    private static PrintWriter out; // for writing to ServerRouter
-    private static BufferedReader in; // for reading form ServerRouter
-    private static InetAddress addr;
-    private static String host; // Client machine's IP
-    private static String routerName; // ServerRouter host name
-    private static int SockNum; // port number
+    private Socket Socket;// socket to connect with ServerRouter
+    private PrintWriter out; // for writing to ServerRouter
+    private BufferedReader in; // for reading form ServerRouter
+    private InetAddress addr;
+    private String host; // Client machine's IP
+    private String routerName; // ServerRouter host name
+    private int SockNum; // port number
 
-    public static void main(String[] args) {
+    /**
+     * Constructor
+     * @throws IOException
+     */
+    public TCPClient() throws IOException {
+        ROUTER_NAME = "10.99.19.171";
+        PORT = 5556;
+        SERVER_ADDRESS = "10.99.25.224";
+        INPUT_FILE = "src/file.txt";
 
-        try{
-            run();
-        } catch (Exception e){
-            System.err.println("SOMETHING BROKE!\n" + e);
-        }
-
-        System.exit(0);
-    }
-
-    private static void run() throws IOException {
 
         stat = new Stats();
 
@@ -42,6 +40,40 @@ public class TCPClient {
         host = addr.getHostAddress(); // Client machine's IP
         routerName = ROUTER_NAME; // ServerRouter host name
         SockNum = PORT; // port number
+    }
+
+    /**
+     * Constructor
+     * @param router
+     * @param port
+     * @param serverAddress
+     * @param inputFile
+     * @throws IOException
+     */
+    public TCPClient(String router, int port, String serverAddress, String inputFile) throws IOException {
+        ROUTER_NAME = router;
+        PORT = port;
+        SERVER_ADDRESS = serverAddress;
+        INPUT_FILE = inputFile;
+
+
+        stat = new Stats();
+
+        // Variables for setting up connection and communication
+        Socket = null; // socket to connect with ServerRouter
+        out = null; // for writing to ServerRouter
+        in = null; // for reading form ServerRouter
+        addr = InetAddress.getLocalHost();
+        host = addr.getHostAddress(); // Client machine's IP
+        routerName = ROUTER_NAME; // ServerRouter host name
+        SockNum = PORT; // port number
+    }
+
+    /**
+     * This is the run method.
+     * @throws IOException
+     */
+    public void run() throws IOException {
 
         // Tries to connect to the ServerRouter
         try {
