@@ -89,7 +89,7 @@ public class Main{
 
 
     private static void server100() throws IOException {
-        for(int i = 0; i < 100; i ++){
+        for(int i = 0; i < 100; i++){
             System.out.println("Running Server100...");
 
             String SERVER_ROUTER_NAME = dhruvalIP;
@@ -102,7 +102,7 @@ public class Main{
     }
 
     private static void client100() throws IOException {
-        for(int i = 0; i < 100; i ++){
+        for(int i = 0; i < 100; i++){
             System.out.println("Running Client100...");
 
             String SERVER_ROUTER_NAME = dhruvalIP;

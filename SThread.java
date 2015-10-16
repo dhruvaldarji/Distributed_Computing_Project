@@ -1,7 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.lang.Exception;
-
 
 public class SThread extends Thread {
     private Object[][] RTable; // routing table
@@ -9,7 +7,7 @@ public class SThread extends Thread {
     private BufferedReader in; // reader (for reading from the machine connected to)
     private String inputLine, outputLine, destination, addr; // communication strings
     private Socket outSocket; // socket for communicating with a destination
-    private int ind; // index in the routing table
+    private int myIndex; // index in the routing table
 
     // Constructor
     SThread(Object[][] Table, Socket toClient, int index) throws IOException {
@@ -17,9 +15,24 @@ public class SThread extends Thread {
         in = new BufferedReader(new InputStreamReader(toClient.getInputStream()));
         RTable = Table;
         addr = toClient.getInetAddress().getHostAddress();
-        RTable[index][0] = addr; // IP addresses
-        RTable[index][1] = toClient; // sockets for communication
-        ind = index;
+
+        boolean alreadyExists = false;
+
+        //Check if IP exists in index.
+        for (int i = 0; i < 10; i++) {
+            if(RTable[i][0] == addr){
+                RTable[i][1] = toClient;
+                alreadyExists = true;
+            }
+
+        }
+
+        if(!alreadyExists){
+            RTable[index][0] = addr; // IP addresses
+            RTable[index][1] = toClient; // sockets for communication
+            myIndex = index;
+        }
+
     }
 
     // Run method (will run for each machine that connects to the ServerRouter)
@@ -38,7 +51,7 @@ public class SThread extends Thread {
             }
 
             // loops through the routing table to find the destination
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 200; i++) {
                 if (destination.equals((String) RTable[i][0])) {
                     outSocket = (Socket) RTable[i][1]; // gets the socket for communication from the table
                     System.out.println("Found destination: " + destination);
@@ -50,7 +63,7 @@ public class SThread extends Thread {
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Client/Server said: " + inputLine);
                 if (inputLine.equals("Bye.")) { // exit statement
-                  outTo.println("Bye.");
+                    outTo.println("Bye.");
                     break;
                 }
                 outputLine = inputLine; // passes the input from the machine to the output string for the destination

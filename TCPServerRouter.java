@@ -15,7 +15,7 @@ public class TCPServerRouter {
      */
     public TCPServerRouter(){
         clientSocket = null; // socket for the thread
-        RoutingTable = new Object[10][2]; // routing table
+        RoutingTable = new Object[200][2]; // routing table
         SockNum = PORT; // port number
         Running = true;
         ind = 0; // index in the routing table
@@ -27,7 +27,7 @@ public class TCPServerRouter {
      */
     public TCPServerRouter(int port){
         clientSocket = null; // socket for the thread
-        RoutingTable = new Object[10][2]; // routing table
+        RoutingTable = new Object[200][2]; // routing table
         SockNum = port; // port number
         Running = true;
         ind = 0; // index in the routing table
