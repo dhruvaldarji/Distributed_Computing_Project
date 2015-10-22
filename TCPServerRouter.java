@@ -1,11 +1,12 @@
 import java.net.*;
 import java.io.*;
+import java.util.HashMap;
 
 public class TCPServerRouter {
 
     private int PORT = 5556;
     private Socket clientSocket;
-    private Object[][] RoutingTable;
+    private HashMap<String, Socket> RoutingTable;
     private int SockNum;
     private Boolean Running = false;
     private int ind = 0;
@@ -15,7 +16,7 @@ public class TCPServerRouter {
      */
     public TCPServerRouter(){
         clientSocket = null; // socket for the thread
-        RoutingTable = new Object[200][2]; // routing table
+        RoutingTable = new HashMap<>(); // routing table
         SockNum = PORT; // port number
         Running = true;
         ind = 0; // index in the routing table
@@ -23,11 +24,11 @@ public class TCPServerRouter {
 
     /**
      * Constructor
-     * @param port
+     * @param port : Port
      */
     public TCPServerRouter(int port){
         clientSocket = null; // socket for the thread
-        RoutingTable = new Object[200][2]; // routing table
+        RoutingTable = new HashMap<>(); // routing table
         SockNum = port; // port number
         Running = true;
         ind = 0; // index in the routing table
@@ -45,7 +46,12 @@ public class TCPServerRouter {
             serverSocket = new ServerSocket(PORT);
             System.out.println("ServerRouter is Listening on port: " + serverSocket.getLocalPort() + ".");
         } catch (IOException e) {
-            System.err.println("Could not listen on port: " + serverSocket.getLocalPort() + ".");
+            if (serverSocket!= null) {
+                System.err.println("Could not listen on port: " + serverSocket.getLocalPort() + ".");
+            }
+            else {
+                System.err.println("Port is null.");
+            }
             System.exit(1);
         }
 
@@ -53,9 +59,8 @@ public class TCPServerRouter {
         while (Running) {
             try {
                 clientSocket = serverSocket.accept();
-                SThread thread = new SThread(RoutingTable, clientSocket, ind); // creates a thread with a random port
+                SThread thread = new SThread(RoutingTable, clientSocket); // creates a thread with a random port
                 thread.start(); // starts the thread
-                ind++; // increments the index
                 System.out.println("ServerRouter connected with Client/Server: " + clientSocket.getInetAddress().getHostAddress());
             } catch (IOException e) {
                 System.err.println("Client/Server failed to connect.");

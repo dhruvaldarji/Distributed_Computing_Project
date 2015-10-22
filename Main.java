@@ -9,9 +9,9 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
-    public static String dhruvalIP = "10.99.10.214";
-    public static String deionIP = "10.99.2.181";
-    public static String mirelaIP = "10.99.27.97";
+    public static String dhruvalIP = "10.99.22.28";
+    public static String deionIP = "10.99.26.247";
+    public static String mirelaIP = "10.99.8.194";
     public static String inputFile = "src/file.txt";
 
     private static Scanner in;
@@ -19,7 +19,7 @@ public class Main{
 
     public static void main( String [] args ) throws IOException {
         System.out.println("Thank you for running the Client/Server Manager");
-        System.out.println("What would you like to run? ('(r)outer', '(s)erver', or '(c)lient')");
+        System.out.println("What would you like to run? ('(r)outer', '(s)erver'/ (s100), or '(c)lient'/ (c100) )");
 
         in = new Scanner(System.in);
         user = in.nextLine();

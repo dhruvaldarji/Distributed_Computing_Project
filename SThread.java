@@ -1,38 +1,22 @@
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
 public class SThread extends Thread {
-    private Object[][] RTable; // routing table
+    private HashMap<String, Socket> RTable; // Dynamic Routing Table
     private PrintWriter out, outTo; // writers (for writing back to the machine and to destination)
     private BufferedReader in; // reader (for reading from the machine connected to)
     private String inputLine, outputLine, destination, addr; // communication strings
     private Socket outSocket; // socket for communicating with a destination
-    private int myIndex; // index in the routing table
 
     // Constructor
-    SThread(Object[][] Table, Socket toClient, int index) throws IOException {
+    SThread(HashMap<String, Socket> Table, Socket toClient) throws IOException {
         out = new PrintWriter(toClient.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(toClient.getInputStream()));
         RTable = Table;
         addr = toClient.getInetAddress().getHostAddress();
 
-        boolean alreadyExists = false;
-
-        //Check if IP exists in index.
-        for (int i = 0; i < 10; i++) {
-            if(RTable[i][0] == addr){
-                RTable[i][1] = toClient;
-                alreadyExists = true;
-            }
-
-        }
-
-        if(!alreadyExists){
-            RTable[index][0] = addr; // IP addresses
-            RTable[index][1] = toClient; // sockets for communication
-            myIndex = index;
-        }
-
+        RTable.put(addr, toClient); // sockets for communication
     }
 
     // Run method (will run for each machine that connects to the ServerRouter)
@@ -43,20 +27,17 @@ public class SThread extends Thread {
             System.out.println("Forwarding to " + destination);
             out.println("Connected to the router."); // confirmation of connection
 
-            // waits 10 seconds to let the routing table fill with all machines' information
-            try {
-                Thread.currentThread().sleep(10000);
-            } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted");
-            }
+//            // waits 10 seconds to let the routing table fill with all machines' information
+//            try {
+//                Thread.currentThread().sleep(10000);
+//            } catch (InterruptedException ie) {
+//                System.out.println("Thread interrupted");
+//            }
 
-            // loops through the routing table to find the destination
-            for (int i = 0; i < 200; i++) {
-                if (destination.equals((String) RTable[i][0])) {
-                    outSocket = (Socket) RTable[i][1]; // gets the socket for communication from the table
-                    System.out.println("Found destination: " + destination);
-                    outTo = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
-                }
+            if (RTable.containsKey(destination)) {
+                outSocket = RTable.get(destination); // gets the socket for communication from the table
+                System.out.println("Found destination: " + destination);
+                outTo = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
             }
 
             // Communication loop
