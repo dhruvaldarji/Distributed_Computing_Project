@@ -27,11 +27,13 @@ public class SThread extends Thread {
             System.out.println("Forwarding to " + destination);
             out.println("Connected to the router."); // confirmation of connection
 
+//            while(!RTable.containsKey(destination)){
 //            // waits 10 seconds to let the routing table fill with all machines' information
-//            try {
-//                Thread.currentThread().sleep(10000);
-//            } catch (InterruptedException ie) {
-//                System.out.println("Thread interrupted");
+                try {
+                    Thread.currentThread().sleep(10000);
+                } catch (InterruptedException ie) {
+                    System.out.println("Thread interrupted");
+                }
 //            }
 
             if (RTable.containsKey(destination)) {

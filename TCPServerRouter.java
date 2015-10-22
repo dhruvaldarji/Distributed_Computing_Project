@@ -46,7 +46,7 @@ public class TCPServerRouter {
             serverSocket = new ServerSocket(PORT);
             System.out.println("ServerRouter is Listening on port: " + serverSocket.getLocalPort() + ".");
         } catch (IOException e) {
-            if (serverSocket!= null) {
+            if (serverSocket != null) {
                 System.err.println("Could not listen on port: " + serverSocket.getLocalPort() + ".");
             }
             else {

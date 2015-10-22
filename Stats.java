@@ -30,63 +30,63 @@ public class Stats {
 
     }
 
-    public static int getAverageTransmissionInSize() {
+    public int getAverageTransmissionInSize() {
         return averageTransmissionInSize;
     }
 
-    public static void setAverageTransmissionInSize(int averageTransmissionInSize) {
+    public void setAverageTransmissionInSize(int averageTransmissionInSize) {
         Stats.averageTransmissionInSize = averageTransmissionInSize;
     }
 
-    public static int getAverageTransmissionOutSize() {
+    public int getAverageTransmissionOutSize() {
         return averageTransmissionOutSize;
     }
 
-    public static void setAverageTransmissionOutSize(int averageTransmissionOutSize) {
+    public void setAverageTransmissionOutSize(int averageTransmissionOutSize) {
         Stats.averageTransmissionOutSize = averageTransmissionOutSize;
     }
 
-    public static int getAverageTransmissionSize() {
+    public int getAverageTransmissionSize() {
         return AverageTransmissionSize;
     }
 
-    public static void setAverageTransmissionSize(int averageTransmissionSize) {
+    public void setAverageTransmissionSize(int averageTransmissionSize) {
         AverageTransmissionSize = averageTransmissionSize;
     }
 
-    public static ArrayList<Integer> getTransmissionInSizes() {
+    public ArrayList<Integer> getTransmissionInSizes() {
         return transmissionInSizes;
     }
 
-    public static void setTransmissionInSizes(ArrayList<Integer> transmissionInSizes) {
+    public void setTransmissionInSizes(ArrayList<Integer> transmissionInSizes) {
         Stats.transmissionInSizes = transmissionInSizes;
     }
 
-    public static ArrayList<Integer> getTransmissionOutSizes() {
+    public ArrayList<Integer> getTransmissionOutSizes() {
         return transmissionOutSizes;
     }
 
-    public static void setTransmissionOutSizes(ArrayList<Integer> transmissionOutSizes) {
+    public void setTransmissionOutSizes(ArrayList<Integer> transmissionOutSizes) {
         Stats.transmissionOutSizes = transmissionOutSizes;
     }
 
-    public static int getAverageTransmissionTime() {
+    public int getAverageTransmissionTime() {
         return averageTransmissionTime;
     }
 
-    public static void setAverageTransmissionTime(int averageTransmissionTime) {
+    public void setAverageTransmissionTime(int averageTransmissionTime) {
         Stats.averageTransmissionTime = averageTransmissionTime;
     }
 
-    public static ArrayList<Long> getTransmissionTimes() {
+    public ArrayList<Long> getTransmissionTimes() {
         return transmissionTimes;
     }
 
-    public static void setTransmissionTimes(ArrayList<Long> transmissionTimes) {
+    public void setTransmissionTimes(ArrayList<Long> transmissionTimes) {
         Stats.transmissionTimes = transmissionTimes;
     }
 
-    public static void ComputeAverages(){
+    public void ComputeAverages(){
         // Average Transmission In Size
         for(int i = 0; i < transmissionInSizes.size(); i++){
             averageTransmissionInSize += transmissionInSizes.get(i);

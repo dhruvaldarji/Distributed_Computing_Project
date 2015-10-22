@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.Random;
 
 public class TCPClient {
 
@@ -91,7 +90,6 @@ public class TCPClient {
         // Variables for message passing
         Reader reader = new FileReader(INPUT_FILE);
         BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
-        Long fileLength = fromFile.lines().count();
         String fromServer; // messages received from ServerRouter
         String fromUser; // messages sent to ServerRouter
         String address = SERVER_ADDRESS; // destination IP (Server)
@@ -103,9 +101,6 @@ public class TCPClient {
         System.out.println("ServerRouter: " + fromServer);
         out.println(host); // Client sends the IP of its machine as initial send
         t0 = System.currentTimeMillis();
-
-        Random random = new Random();
-        int randNum = random.nextInt((int) (long) fileLength);
 
         // Communication while loop
         while ((fromServer = in.readLine()) != null) {
@@ -125,14 +120,7 @@ public class TCPClient {
             if (fromUser != null) {
                 System.out.println("Client: " + fromUser);
                 stat.getTransmissionOutSizes().add(fromUser.length());
-
-                if(fromUser instanceof String) {
-                    out.println(fromUser); // sending the strings to the Server via ServerRouter
-                }
-                else {
-                    out.print(fromUser);
-                    out.println("Bye.");
-                }
+                out.println(fromUser); // sending the strings to the Server via ServerRouter
                 t0 = System.currentTimeMillis();
             }
         }

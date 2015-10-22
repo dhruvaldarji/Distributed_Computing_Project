@@ -1,5 +1,3 @@
-import sun.misc.Cleaner;
-
 import java.io.IOException;
 import java.util.Scanner;
 
