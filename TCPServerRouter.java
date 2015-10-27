@@ -9,7 +9,6 @@ public class TCPServerRouter {
     private HashMap<String, Socket> RoutingTable;
     private int SockNum;
     private Boolean Running = false;
-    private int ind = 0;
 
     /**
      * Constructor
@@ -19,7 +18,6 @@ public class TCPServerRouter {
         RoutingTable = new HashMap<>(); // routing table
         SockNum = PORT; // port number
         Running = true;
-        ind = 0; // index in the routing table
     }
 
     /**
@@ -31,7 +29,6 @@ public class TCPServerRouter {
         RoutingTable = new HashMap<>(); // routing table
         SockNum = port; // port number
         Running = true;
-        ind = 0; // index in the routing table
     }
 
     /**
