@@ -107,6 +107,7 @@ public class TCPClient {
             System.out.println("Server: " + fromServer);
             stat.getTransmissionInSizes().add(fromServer.length());
             t1 = System.currentTimeMillis();
+
             if (fromServer.equals("Bye.")) {// exit statement
                 break;
             }
