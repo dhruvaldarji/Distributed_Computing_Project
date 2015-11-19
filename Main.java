@@ -7,9 +7,9 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
-    public static String dhruvalIP = "10.99.22.28";
-    public static String deionIP = "10.99.26.247";
-    public static String mirelaIP = "10.99.8.194";
+    public static String dhruvalIP = "10.99.29.140.";
+    public static String deionIP = "10.99.4.145";
+    public static String mirelaIP = "10.99.10.42";
     public static String inputFile = "src/file.txt";
 
     public static String CLIENT_NAME = "C1";
