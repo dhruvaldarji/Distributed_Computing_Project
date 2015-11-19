@@ -6,8 +6,8 @@ public class TCPServerRouter {
 
     private int PORT = 5556;
     private Socket clientSocket;
-    private HashMap<String, Socket> RoutingTable;
-    //private HashMap<String, RoutingInfo> RoutingTable;
+//    private HashMap<String, Socket> RoutingTable;
+    private HashMap<String, RoutingInfo> RoutingTable;
     private int SockNum;
     private Boolean Running = false;
 
@@ -32,14 +32,6 @@ public class TCPServerRouter {
         Running = true;
     }
 
- /**
-    public TCPServerRouter(String names, RoutingInfo clientInfo){
-        clientSocket = null; // socket for the thread
-        RoutingTable = new HashMap<>(); // routing table
-        SockNum = port; // port number
-        Running = true;
-    }
-*/
 
     /**
      * The run method
@@ -66,7 +58,8 @@ public class TCPServerRouter {
         while (Running) {
             try {
                 clientSocket = serverSocket.accept();
-                SThread thread = new SThread(RoutingTable, clientSocket); // creates a thread with a random port
+                // creates a thread with a random port
+                SThread thread = new SThread(RoutingTable, new RoutingInfo(clientSocket, clientSocket.getInetAddress().toString()));
                 thread.start(); // starts the thread
                 System.out.println("ServerRouter connected with Client/Server: " + clientSocket.getInetAddress().getHostAddress());
             } catch (IOException e) {

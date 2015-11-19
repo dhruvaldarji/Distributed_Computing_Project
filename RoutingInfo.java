@@ -12,7 +12,15 @@ public class RoutingInfo {
     private Boolean inUse;
     private String name;
 
-    public RoutingInfo() {
+    public RoutingInfo(Socket client, String IPAddress) {
+        this.client = client;
+        this.IPAddress = IPAddress;
+    }
+
+    public RoutingInfo(Socket client, String IPAddress, String name) {
+        this.client = client;
+        this.IPAddress = IPAddress;
+        this.name = name;
     }
 
     public String getIPAddress() {

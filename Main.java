@@ -12,6 +12,9 @@ public class Main{
     public static String mirelaIP = "10.99.8.194";
     public static String inputFile = "src/file.txt";
 
+    public static String CLIENT_NAME = "C1";
+    public static String SERVER_NAME = "S1";
+
     private static Scanner in;
     private static String user = "";
 
@@ -69,7 +72,7 @@ public class Main{
         int PORT = 5556;
         String CLIENT_ADDRESS = mirelaIP;
 
-        server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
+        server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
         server.run();
     }
 
@@ -81,7 +84,7 @@ public class Main{
         String SERVER_ADDRESS = deionIP;
         String INPUT_FILE = inputFile;
 
-        client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
+        client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
         client.run();
     }
 
@@ -94,7 +97,7 @@ public class Main{
             int PORT = 5556;
             String CLIENT_ADDRESS = deionIP;
 
-            server = new TCPServer(SERVER_ROUTER_NAME, PORT, CLIENT_ADDRESS);
+            server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
             server.run();
         }
     }
@@ -108,7 +111,7 @@ public class Main{
             String SERVER_ADDRESS = mirelaIP;
             String INPUT_FILE = inputFile;
 
-            client = new TCPClient(SERVER_ROUTER_NAME, PORT, SERVER_ADDRESS, INPUT_FILE);
+            client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
             client.run();
         }
     }
