@@ -68,9 +68,8 @@ public class Main{
     private static void server() throws IOException{
         System.out.println("Running Server...");
 
-        String SERVER_ROUTER_NAME = dhruvalIP;
+        String SERVER_ROUTER_NAME = deionIP;
         int PORT = 5556;
-        String CLIENT_ADDRESS = mirelaIP;
 
         server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
         server.run();
@@ -81,7 +80,6 @@ public class Main{
 
         String SERVER_ROUTER_NAME = dhruvalIP;
         int PORT = 5556;
-        String SERVER_ADDRESS = deionIP;
         String INPUT_FILE = inputFile;
 
         client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
@@ -93,9 +91,8 @@ public class Main{
         for(int i = 0; i < 100; i++){
             System.out.println("Running Server100...");
 
-            String SERVER_ROUTER_NAME = dhruvalIP;
+            String SERVER_ROUTER_NAME = deionIP;
             int PORT = 5556;
-            String CLIENT_ADDRESS = deionIP;
 
             server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
             server.run();
@@ -106,9 +103,8 @@ public class Main{
         for(int i = 0; i < 100; i++){
             System.out.println("Running Client100...");
 
-            String SERVER_ROUTER_NAME = dhruvalIP;
+            String SERVER_ROUTER_NAME = deionIP;
             int PORT = 5556;
-            String SERVER_ADDRESS = mirelaIP;
             String INPUT_FILE = inputFile;
 
             client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);

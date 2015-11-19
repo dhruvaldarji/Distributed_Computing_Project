@@ -72,7 +72,7 @@ public class TCPClient {
         out.println(ServerName);// secondary send (IP of the destination Server)
         fromServer = in.readLine();//initial receive from router (verification of connection)
         System.out.println("ServerRouter: " + fromServer);
-        out.println(host); // Client sends the IP of its machine as initial send
+//        out.println(host); // Client sends the IP of its machine as initial send
         t0 = System.currentTimeMillis();
 
         // Communication while loop
