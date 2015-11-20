@@ -2,54 +2,73 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 
 public class SThread extends Thread {
     private HashMap<String, RoutingInfo> RTable; // Dynamic Routing Table
-    private PrintWriter out, outTo, subnetOut; // writers (for writing back to the machine and to destination)
+    private PrintWriter out, subnetOut; // writers (for writing back to the machine and to destination)
     private BufferedReader in, subnetIn; // reader (for reading from the machine connected to)
-    private String inputLine, outputLine, destination, addr; // communication strings
+    private String inputLine, outputLine, destination; // communication strings
     private Socket outSocket; // socket for communicating with a destination
-    private int defaultPort = 5556;
+    private String ServerAddress;
+    private int ServerPort;
     private String name;
-    boolean IM_A_FUCKING_ROUTER = false;
+    private RoutingInfo ClientInfo;
 
     // Constructor
-    SThread(HashMap<String, RoutingInfo> Table, RoutingInfo clientInfo) throws IOException {
+    SThread(String sAddress, int sPort, HashMap<String, RoutingInfo> Table, RoutingInfo clientInfo) throws IOException {
         in = new BufferedReader(new InputStreamReader(clientInfo.getClient().getInputStream()));
         out = new PrintWriter(clientInfo.getClient().getOutputStream(), true);
 
+        ServerAddress = sAddress;
+        ServerPort = sPort;
+
         RTable = Table;
-        addr = clientInfo.getClient().getInetAddress().getHostAddress();
+        ClientInfo = clientInfo;
+        ClientInfo.setPort(clientInfo.getClient().getLocalPort());
 
-        //Get Our Name yo
-        name = in.readLine();
-
-        // This is a router.
-        if (name.startsWith("R")) {
-            System.out.println("Router "+ addr +" is connected.");
-            IM_A_FUCKING_ROUTER = true;
-        }
-        // This is a client/server
-        else {
-            clientInfo.setName(name);
-            RTable.put(clientInfo.getName(), clientInfo); // sockets for communication
-        }
     }
 
     // Run method (will run for each machine that connects to the ServerRouter)
     public void run() {
 
-        if (IM_A_FUCKING_ROUTER) {
-            router();
-        } else {
-            runOtherBitches();
+        //Get Our Name yo
+        try {
+            name = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        // This is a router.
+        if (name.startsWith("R")) {
+            //Find out which Router connected;
+            for(String router : RTable.keySet()){
+                RoutingInfo temp = RTable.get(router);
+//                println("Temp Router: "+temp.toString());
+                if(temp.isRouter()
+                        && (temp.getIPAddress().equals(ClientInfo.getIPAddress())
+                        && (temp.getPort() == ClientInfo.getPort())) ){
+                    temp.setClient(ClientInfo.getClient());
+                    ClientInfo = temp;
+
+//                    println("Router connected: " + ClientInfo.toString());
+                    router();
+                }
+            }
+        }
+
+        // This is a client/server
+        else {
+            ClientInfo.setName(name);
+            RTable.put(ClientInfo.getName(), ClientInfo); // sockets for communication
+            clients();
+        }
+
+    }
+
+    private void println(String s){
+        System.out.println(Thread.currentThread().getName()+": "+s);
     }
 
     private void router() {
@@ -57,18 +76,17 @@ public class SThread extends Thread {
 
             // find out who they are trying to look for.
             destination = in.readLine();
-            System.out.println("Router " + name + " is looking for " + destination);
-            out.println("Connected; Searching subnet for " + destination + ",");
+            println("Router " + ClientInfo.getName() + " is looking for " + destination);
 
 
             // waits 10 seconds to let the routing table fill with all machines' information
             try {
                 Thread.currentThread().sleep(10000);
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted");
+                println("Thread interrupted");
             }
 
-            RoutingInfo r = null;
+            RoutingInfo info = null;
             boolean clientFound = false;
 
             // Check if key exists within our table
@@ -76,15 +94,17 @@ public class SThread extends Thread {
                 // Local client found.
                 clientFound = true;
 
-                out.println("RingADingDing");
+                info = RTable.get(destination);
+                info.setInUse(true);
 
-                r = RTable.get(destination);
-                r.setInUse(true);
-
-                outSocket = r.getClient(); // gets the socket for communication from the table
+                outSocket = info.getClient(); // gets the socket for communication from the table
                 subnetIn = new BufferedReader(new InputStreamReader(outSocket.getInputStream()));
                 subnetOut = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
-                System.out.println("Found destination: " + destination);
+
+                out.println("RingADingDing");
+
+                println("Found from Subnet: " + destination);
+//                subnetOut.println("This is your Router telling you to SPEAK!");
             }
             else {
                 out.println("Bye Bye Bye");
@@ -94,20 +114,17 @@ public class SThread extends Thread {
             // Communication loop
             if (clientFound) {
                 while ((inputLine = in.readLine()) != null) {
-                    System.out.println("Client/Server said: " + inputLine);
+
+                    println("Client/Server said: " + inputLine);
+
                     if (inputLine.equals("Bye.")) { // exit statement
                         subnetOut.println("Bye.");
-                        out.println("Bye.");
-                        r.setInUse(false);
+                        info.setInUse(false);
                         break;
                     }
+                    outputLine = inputLine; // passes the input from the machine to the output string for the destination
 
-                    // passes the input from the machine to the output string for the destination
-                    outputLine = inputLine;
-
-                    if (outSocket != null) {
-                        subnetOut.println(outputLine); // writes to the destination
-                    }
+                    subnetOut.println(outputLine); // writes to the destination
                 }// end while
             }
 
@@ -120,11 +137,11 @@ public class SThread extends Thread {
 
     }
 
-    private void runOtherBitches() {
+    private void clients() {
         try {
             // Initial sends/receives
             destination = in.readLine(); // initial read (the destination for writing)
-            System.out.println("Forwarding " + name + " to " + destination);
+            println("Forwarding " + name + " to " + destination);
             out.println("Connected to the router."); // confirmation of connection
 
             subnetOut = null; // writers (for writing back to the machine and to destination)
@@ -134,10 +151,10 @@ public class SThread extends Thread {
             try {
                 Thread.currentThread().sleep(10000);
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted");
+                println("Thread interrupted");
             }
 
-            RoutingInfo r = null;
+            RoutingInfo info = null;
             boolean clientFound = false;
 
             // Check if key exists within our table
@@ -145,42 +162,49 @@ public class SThread extends Thread {
                 // Local client found.
                 clientFound = true;
 
-                r = RTable.get(destination);
-                r.setInUse(true);
+                info = RTable.get(destination);
+                info.setInUse(true);
 
-                outSocket = r.getClient(); // gets the socket for communication from the table
-                outTo = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
-                System.out.println("Found destination: " + destination);
+                outSocket = info.getClient(); // gets the socket for communication from the table
+                subnetOut = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
+                println("Found Client/Server: " + destination);
             }
 
             // Else check if key exists within subnet.
             if (!clientFound) {
+                println("Looking through Subnet...");
+                for(String router : RTable.keySet()){
+                    info = RTable.get(router);
+                    if(info.isRouter()
+                            && !(
+                                (info.getIPAddress().equals(ServerAddress))
+                                && (info.getPort() == ServerPort)
+                            )
+                        ){
+//                        println("RTable_Item: "+info.toString());
 
-                System.out.println("Looking through Subnet...");
-                for(String rName : RTable.keySet()){
-                    if(!clientFound && RTable.get(rName).isRouter() && !(RTable.get(rName).getIPAddress().equals(InetAddress.getLocalHost().toString()))){
-                        RoutingInfo router = RTable.get(rName);
-                         // Tries to connect to the ServerRouter
-                        try {
-                            router.setClient(new Socket(router.getIPAddress(), defaultPort));
+                        try{
+//                            println("Found a Router on the Subnet.");
 
-                            subnetIn = new BufferedReader(new InputStreamReader(router.getClient().getInputStream()));
-                            subnetOut = new PrintWriter(router.getClient().getOutputStream(), true);
-
-                            subnetOut.println("Router Motherfucker!");
+                            outSocket = new Socket(info.getIPAddress(), info.getPort());
+                            subnetIn = new BufferedReader(new InputStreamReader(outSocket.getInputStream()));
+                            subnetOut = new PrintWriter(outSocket.getOutputStream(), true);
+                            subnetOut.println("Router");
                             subnetOut.println(destination);
 
                             String result = subnetIn.readLine();
-                            if (result.equals("RingADingDing")){
-                                System.out.println("Subnet: "+result);
+                            if(result.equals("RingADingDing")) {
+                                println(result+": Subnet router has destination: "+destination);
                                 clientFound = true;
                                 break;
                             }
+                            else {
+                                println(result+": Subnet router does NOT have destination, moving on...");
+                            }
 
-                        } catch (Exception e) {
-                            System.out.println("Router at "+router.getIPAddress()+" is unavailable. Moving on...");
+                        } catch (IOException e){
+                            println("Could not connect to Subnet at address: "+info.getIPAddress()+", Moving on...");
                         }
-
                     }
                 }
             }
@@ -188,19 +212,17 @@ public class SThread extends Thread {
             // Client found.
             // Communication loop
             if (clientFound) {
-                while ((inputLine = subnetIn.readLine()) != null) {
-                    System.out.println("Client/Server said: " + inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    println("Client/Server said: " + inputLine);
                     if (inputLine.equals("Bye.")) { // exit statement
                         subnetOut.println("Bye.");
-                        out.println("Bye.");
-                        r.setInUse(false);
+                        info.setInUse(false);
                         break;
                     }
                     outputLine = inputLine; // passes the input from the machine to the output string for the destination
 
-                    if (outSocket != null) {
-                        outTo.println(outputLine); // writes to the destination
-                    }
+                    subnetOut.println(outputLine); // writes to the destination
+
                 }// end while
             }
 

@@ -15,6 +15,7 @@ public class TCPClient {
     private String routerName; // ServerRouter host name
     private int SockNum; // port number
     private String INPUT_FILE;
+    private long connectionTime;
 
     /**
      * Constructor
@@ -72,27 +73,37 @@ public class TCPClient {
         out.println(ServerName);// secondary send (IP of the destination Server)
         fromServer = in.readLine();//initial receive from router (verification of connection)
         System.out.println("ServerRouter: " + fromServer);
-        out.println("Its Bob Ross Time!");
+        out.println("It's Bob Ross Time!");
+        boolean init = true;
         t0 = System.currentTimeMillis();
 
         // Communication while loop
         while ((fromServer = in.readLine()) != null) {
             System.out.println("Server: " + fromServer);
-            stat.getTransmissionInSizes().add(fromServer.length());
+
+            if(!init){
+                stat.getTransmissionInSizes().add(fromServer.length());
+            }
+
             t1 = System.currentTimeMillis();
+
+            t = t1 - t0;
+
+            // If this is the initial send.
+            if(init){
+                connectionTime = t;
+                stat.setConnectionTime(connectionTime);
+                init = false;
+            }
+            else{
+                stat.getTransmissionTimes().add(t);
+            }
+
+            System.out.println("Cycle time: " + t);
 
             if (fromServer.equals("Bye.")) {// exit statement
                 break;
             }
-
-            t = t1 - t0;
-            if(t>10000){
-                t -=10000;
-            }
-
-            stat.getTransmissionTimes().add(t);
-
-            System.out.println("Cycle time: " + t);
 
             fromUser = fromFile.readLine(); // reading strings from a file
             if (fromUser != null) {

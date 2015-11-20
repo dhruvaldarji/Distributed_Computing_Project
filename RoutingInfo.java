@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class RoutingInfo {
     private String IPAddress;
+    private int port;
     private Socket client;
     private Boolean inUse = false;
     private String name;
@@ -24,9 +25,10 @@ public class RoutingInfo {
         this.name = name;
     }
 
-    public RoutingInfo(Socket client, String IPAddress, String name, Boolean isRouter) {
+    public RoutingInfo(Socket client, String IPAddress, int port, String name, Boolean isRouter) {
         this.client = client;
         this.IPAddress = IPAddress;
+        this.port = port;
         this.name = name;
         this.isRouter = isRouter;
     }
@@ -45,6 +47,14 @@ public class RoutingInfo {
 
     public void setIPAddress(String IPAddress) {
         this.IPAddress = IPAddress;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public Socket getClient() {
@@ -69,5 +79,17 @@ public class RoutingInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "RoutingInfo{" +
+                "client=" + client +
+                ", IPAddress='" + IPAddress + '\'' +
+                ", port=" + port +
+                ", inUse=" + inUse +
+                ", name='" + name + '\'' +
+                ", isRouter=" + isRouter +
+                '}';
     }
 }

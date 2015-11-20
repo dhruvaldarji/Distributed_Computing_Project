@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Stats {
 
+    private static long connectionTime;
     private static int averageTransmissionInSize;
     private static int averageTransmissionOutSize;
     private static int AverageTransmissionSize;
@@ -18,6 +19,8 @@ public class Stats {
 
     public Stats() {
 
+        connectionTime = 0;
+
         averageTransmissionInSize = 0;
         averageTransmissionOutSize = 0;
         AverageTransmissionSize = 0;
@@ -28,6 +31,14 @@ public class Stats {
         averageTransmissionTime = 0;
         transmissionTimes = new ArrayList<>();
 
+    }
+
+    public static long getConnectionTime() {
+        return connectionTime;
+    }
+
+    public static void setConnectionTime(long connectionTime) {
+        Stats.connectionTime = connectionTime;
     }
 
     public int getAverageTransmissionInSize() {
@@ -119,9 +130,9 @@ public class Stats {
 
             writer.append(getAverageTransmissionOutSize() + ",");
 
-
             writer.append(getAverageTransmissionTime() + ",");
-            //generate whatever data you want
+
+            writer.append(getConnectionTime()+"");
 
             writer.flush();
             writer.close();
@@ -131,6 +142,7 @@ public class Stats {
             e.printStackTrace();
         }
         return "Stats {" +  "\n" +
+                "ConnectionTime: " + getConnectionTime() + " ms.\n" +
                 "Average Transmission In Size: " + getAverageTransmissionInSize() + " chars.\n" +
                 "Average Transmission Out Size: " + getAverageTransmissionOutSize() +  " chars.\n" +
                 "Average Transmission Time: " + getAverageTransmissionTime() +  " ms.\n" +
