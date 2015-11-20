@@ -146,7 +146,7 @@ public class SThread extends Thread {
 
             // Else check if key exists within subnet.
             if (!clientFound) {
-                System.out.println("I should be checking the subnet but I can't just yet.");
+                System.out.println("Looking through Subnet...");
                 for(String rName : RTable.keySet()){
                     if(RTable.get(rName).isRouter()){
                         RoutingInfo router = RTable.get(rName);
@@ -157,10 +157,8 @@ public class SThread extends Thread {
                             in = new BufferedReader(new InputStreamReader(router.getClient().getInputStream()));
                         } catch (UnknownHostException e) {
                             System.err.println("Don't know about router: " + router.getIPAddress());
-                            System.exit(1);
                         } catch (IOException e) {
                             System.err.println("Couldn't get I/O for the connection to: " + router.getIPAddress());
-                            System.exit(1);
                         }
 
                         out.println("Router Motherfucker!");

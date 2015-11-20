@@ -8,7 +8,7 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
-    public static String dhruvalIP = "10.99.29.140.";
+    public static String dhruvalIP = "10.99.29.140";
     public static String deionIP = "10.99.4.145";
     public static String mirelaIP = "10.99.10.42";
     public static String inputFile = "src/file.txt";
@@ -75,7 +75,7 @@ public class Main{
     private static void server() throws IOException{
         System.out.println("Running Server...");
 
-        String SERVER_ROUTER_NAME = deionIP;
+        String SERVER_ROUTER_NAME = dhruvalIP;
         int PORT = 5556;
 
         server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
