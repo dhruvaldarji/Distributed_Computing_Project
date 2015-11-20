@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main{
@@ -61,7 +62,13 @@ public class Main{
 
         int port = 5556;
 
-        router = new TCPServerRouter(port);
+        String[] subnetList = new String[]{
+                dhruvalIP,
+                deionIP,
+                mirelaIP
+        };
+
+        router = new TCPServerRouter(port, subnetList);
         router.run();
     }
 
@@ -78,7 +85,7 @@ public class Main{
     private static void client()throws IOException{
         System.out.println("Running Client...");
 
-        String SERVER_ROUTER_NAME = dhruvalIP;
+        String SERVER_ROUTER_NAME = deionIP;
         int PORT = 5556;
         String INPUT_FILE = inputFile;
 

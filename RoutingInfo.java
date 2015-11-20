@@ -9,8 +9,9 @@ import java.util.HashMap;
 public class RoutingInfo {
     private String IPAddress;
     private Socket client;
-    private Boolean inUse;
+    private Boolean inUse = false;
     private String name;
+    private boolean isRouter = false;
 
     public RoutingInfo(Socket client, String IPAddress) {
         this.client = client;
@@ -21,6 +22,21 @@ public class RoutingInfo {
         this.client = client;
         this.IPAddress = IPAddress;
         this.name = name;
+    }
+
+    public RoutingInfo(Socket client, String IPAddress, String name, Boolean isRouter) {
+        this.client = client;
+        this.IPAddress = IPAddress;
+        this.name = name;
+        this.isRouter = isRouter;
+    }
+
+    public boolean isRouter() {
+        return isRouter;
+    }
+
+    public void setIsRouter(boolean isRouter) {
+        this.isRouter = isRouter;
     }
 
     public String getIPAddress() {

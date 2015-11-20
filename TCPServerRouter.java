@@ -25,11 +25,19 @@ public class TCPServerRouter {
      * Constructor
      * @param port : Port
      */
-    public TCPServerRouter(int port){
+    public TCPServerRouter(int port, String [] SubnetList){
         clientSocket = null; // socket for the thread
         RoutingTable = new HashMap<>(); // routing table
         SockNum = port; // port number
         Running = true;
+
+        // Setup Subnet
+        Socket routerSocket = null;
+
+        for(int i  = 0; i < SubnetList.length; i++){
+            RoutingTable.put("R"+i, new RoutingInfo(routerSocket, SubnetList[i], "R"+i, true));
+            System.out.println("Router R"+i+" was added to the Subnet.");
+        }
     }
 
 
