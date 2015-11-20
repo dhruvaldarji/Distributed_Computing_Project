@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -30,7 +31,7 @@ public class SThread extends Thread {
 
         // This is a router.
         if (name.startsWith("R")) {
-            System.out.println("A Router is connected.");
+            System.out.println("Router "+ addr +" is connected.");
             IM_A_FUCKING_ROUTER = true;
         }
         // This is a client/server
@@ -101,7 +102,8 @@ public class SThread extends Thread {
                         break;
                     }
 
-                    outputLine = inputLine; // passes the input from the machine to the output string for the destination
+                    // passes the input from the machine to the output string for the destination
+                    outputLine = inputLine;
 
                     if (outSocket != null) {
                         subnetOut.println(outputLine); // writes to the destination
@@ -156,11 +158,12 @@ public class SThread extends Thread {
 
                 System.out.println("Looking through Subnet...");
                 for(String rName : RTable.keySet()){
-                    if(RTable.get(rName).isRouter()){
+                    if(!clientFound && RTable.get(rName).isRouter() && !(RTable.get(rName).getIPAddress().equals(InetAddress.getLocalHost().toString()))){
                         RoutingInfo router = RTable.get(rName);
                          // Tries to connect to the ServerRouter
                         try {
                             router.setClient(new Socket(router.getIPAddress(), defaultPort));
+
                             subnetIn = new BufferedReader(new InputStreamReader(router.getClient().getInputStream()));
                             subnetOut = new PrintWriter(router.getClient().getOutputStream(), true);
 
@@ -174,10 +177,8 @@ public class SThread extends Thread {
                                 break;
                             }
 
-                        } catch (UnknownHostException e) {
-                            System.err.println("Don't know about router: " + router.getIPAddress());
-                        } catch (IOException e) {
-                            System.err.println("Couldn't get I/O for the connection to: " + router.getIPAddress());
+                        } catch (Exception e) {
+                            System.out.println("Router at "+router.getIPAddress()+" is unavailable. Moving on...");
                         }
 
                     }
