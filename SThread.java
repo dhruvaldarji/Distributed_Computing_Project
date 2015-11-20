@@ -169,6 +169,7 @@ public class SThread extends Thread {
 
                             String result = subnetIn.readLine();
                             if (result.equals("RingADingDing")){
+                                System.out.println("Subnet: "+result);
                                 clientFound = true;
                                 break;
                             }
