@@ -188,7 +188,7 @@ public class Stats {
                 "Average Transmission In Size: " + getAverageTransmissionInSize() + " chars.\n" +
                 "Average Transmission Out Size: " + getAverageTransmissionOutSize() +  " chars.\n" +
                 "Average Transmission Time: " + getAverageTransmissionTime() +  " ms.\n" +
-                "Average Efficiency: " + getAverageEfficiency() +  " ms.\n" +
+                "Average Efficiency: " + getAverageEfficiency() +  " chars/ms.\n" +
                 "}";
     }
 }

@@ -16,7 +16,7 @@ public class Main{
     public static int deionPort = 5555;
     public static int mirelaPort = 5555;
 
-    public static String inputFile = "src/file.txt";
+    public static String inputFile = "src/bobrossquotes.txt";
 
     /*********************************************************/
     /** Default IPs and Ports for this instance. **/
