@@ -23,8 +23,12 @@ public class Main{
     public static String ip = dhruvalIP;
     public static int port = dhruvalPort;
     /*********************************************************/
+
+    /*********************************************************/
+    /** Who do you want to connect too **/
     public static String CLIENT_NAME = "C1";
     public static String SERVER_NAME = "S1";
+    /*******************************************************/
 
     private static Scanner in;
     private static String user = "";
