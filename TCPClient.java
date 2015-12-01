@@ -119,6 +119,12 @@ public class TCPClient {
                 sentTime = System.currentTimeMillis();
                 t0 = System.currentTimeMillis();
                 dataTransferTime = sentTime - initialTime;
+                if(dataTransferTime<1){
+                    // The data transferred in less than a second
+                    // So we will just mark it as a 100% effecient send.
+
+                    dataTransferTime = 1;
+                }
                 efficiency = fromUser.length() / dataTransferTime;
                 stat.getEfficiencies().add(efficiency);
             }
