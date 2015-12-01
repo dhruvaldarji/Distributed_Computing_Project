@@ -8,13 +8,21 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
-    public static String dhruvalIP = "192.168.1.4";
-    public static String deionIP = "192.168.1.7";
-    public static String mirelaIP = "10.99.10.42";
+    public static String dhruvalIP = "10.99.1.221";
+    public static String deionIP = "10.99.30.7";
+    public static String mirelaIP = "10.99.16.205";
+
+    public static int dhruvalPort = 5555;
+    public static int deionPort = 5555;
+    public static int mirelaPort = 5555;
+
     public static String inputFile = "src/file.txt";
 
+    /*********************************************************/
+    /** Default IPs and Ports for this instance. **/
     public static String ip = dhruvalIP;
-
+    public static int port = dhruvalPort;
+    /*********************************************************/
     public static String CLIENT_NAME = "C1";
     public static String SERVER_NAME = "S1";
 
@@ -62,14 +70,11 @@ public class Main{
     private static void router() throws IOException{
         System.out.println("Running Router...");
 
-        int port = 5555;
-//        int port = 5556;
-
         HashMap<String, RoutingInfo> subnetList = new HashMap<>();
 
-        subnetList.put("R1", new RoutingInfo(null, ip, 5555, "R1", true));
-        subnetList.put("R2", new RoutingInfo(null, ip, 5556, "R2", true));
-        subnetList.put("R3", new RoutingInfo(null, ip, 5557, "R3", true));
+        subnetList.put("R1", new RoutingInfo(null, dhruvalIP, 5555, "R1", true));
+        subnetList.put("R2", new RoutingInfo(null, deionIP, 5556, "R2", true));
+        subnetList.put("R3", new RoutingInfo(null, mirelaIP, 5557, "R3", true));
 
         router = new TCPServerRouter(port, subnetList);
         router.run();
@@ -79,9 +84,8 @@ public class Main{
         System.out.println("Running Server...");
 
         String SERVER_ROUTER_NAME = ip;
-        int PORT = 5555;
 
-        server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
+        server = new TCPServer(SERVER_ROUTER_NAME, port, SERVER_NAME, CLIENT_NAME);
         server.run();
     }
 
@@ -89,10 +93,9 @@ public class Main{
         System.out.println("Running Client...");
 
         String SERVER_ROUTER_NAME = ip;
-        int PORT = 5556;
         String INPUT_FILE = inputFile;
 
-        client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
+        client = new TCPClient(SERVER_ROUTER_NAME, port, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
         client.run();
     }
 
@@ -102,9 +105,8 @@ public class Main{
             System.out.println("Running Server100...");
 
             String SERVER_ROUTER_NAME = ip;
-            int PORT = 5555;
 
-            server = new TCPServer(SERVER_ROUTER_NAME, PORT, SERVER_NAME, CLIENT_NAME);
+            server = new TCPServer(SERVER_ROUTER_NAME, port, SERVER_NAME, CLIENT_NAME);
             server.run();
         }
     }
@@ -114,10 +116,9 @@ public class Main{
             System.out.println("Running Client100...");
 
             String SERVER_ROUTER_NAME = ip;
-            int PORT = 5556;
             String INPUT_FILE = inputFile;
 
-            client = new TCPClient(SERVER_ROUTER_NAME, PORT, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
+            client = new TCPClient(SERVER_ROUTER_NAME, port, CLIENT_NAME, SERVER_NAME, INPUT_FILE);
             client.run();
         }
     }
