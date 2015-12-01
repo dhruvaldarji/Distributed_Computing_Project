@@ -16,6 +16,11 @@ public class TCPClient {
     private int SockNum; // port number
     private String INPUT_FILE;
     private long connectionTime;
+    private long efficiency;
+    private long initialTime;
+    private long sentTime;
+    private long dataTransferTime;
+
 
     /**
      * Constructor
@@ -109,8 +114,13 @@ public class TCPClient {
             if (fromUser != null) {
                 System.out.println("Client: " + fromUser);
                 stat.getTransmissionOutSizes().add(fromUser.length());
+                initialTime = System.currentTimeMillis();
                 out.println(fromUser); // sending the strings to the Server via ServerRouter
+                sentTime = System.currentTimeMillis();
                 t0 = System.currentTimeMillis();
+                dataTransferTime = sentTime - initialTime;
+                efficiency = fromUser.length() / dataTransferTime;
+                stat.getEfficiencies().add(efficiency);
             }
         }
 

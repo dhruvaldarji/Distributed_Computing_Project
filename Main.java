@@ -9,7 +9,7 @@ public class Main{
     public static TCPClient client;
 
     public static String dhruvalIP = "192.168.1.5";
-    public static String deionIP = "10.99.4.145";
+    public static String deionIP = "192.168.1.7";
     public static String mirelaIP = "10.99.10.42";
     public static String inputFile = "src/file.txt";
 
@@ -65,9 +65,9 @@ public class Main{
 
         HashMap<String, RoutingInfo> subnetList = new HashMap<>();
 
-        subnetList.put("R1", new RoutingInfo(null, dhruvalIP, 5555, "R1", true));
-        subnetList.put("R2", new RoutingInfo(null, dhruvalIP, 5556, "R2", true));
-        subnetList.put("R3", new RoutingInfo(null, dhruvalIP, 5557, "R3", true));
+        subnetList.put("R1", new RoutingInfo(null, deionIP, 5555, "R1", true));
+        subnetList.put("R2", new RoutingInfo(null, deionIP, 5556, "R2", true));
+        subnetList.put("R3", new RoutingInfo(null, deionIP, 5557, "R3", true));
 
         router = new TCPServerRouter(port, subnetList);
         router.run();
@@ -76,7 +76,7 @@ public class Main{
     private static void server() throws IOException{
         System.out.println("Running Server...");
 
-        String SERVER_ROUTER_NAME = dhruvalIP;
+        String SERVER_ROUTER_NAME = deionIP;
         int PORT = 5556;
 
         server = new TCPServer(SERVER_ROUTER_NAME, 5555, SERVER_NAME, CLIENT_NAME);
@@ -86,7 +86,7 @@ public class Main{
     private static void client()throws IOException{
         System.out.println("Running Client...");
 
-        String SERVER_ROUTER_NAME = dhruvalIP;
+        String SERVER_ROUTER_NAME = deionIP;
         int PORT = 5556;
         String INPUT_FILE = inputFile;
 

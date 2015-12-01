@@ -17,6 +17,10 @@ public class Stats {
     private static int averageTransmissionTime;
     private static ArrayList<Long> transmissionTimes;
 
+    private static long efficiency;
+    private static long averageEfficiency;
+    private static ArrayList<Long> efficiencies;
+
     public Stats() {
 
         connectionTime = 0;
@@ -30,6 +34,10 @@ public class Stats {
 
         averageTransmissionTime = 0;
         transmissionTimes = new ArrayList<>();
+
+        efficiency = 0;
+        averageEfficiency = 0;
+        efficiencies = new ArrayList<>();
 
     }
 
@@ -97,6 +105,31 @@ public class Stats {
         Stats.transmissionTimes = transmissionTimes;
     }
 
+
+    public static long getEfficiency() {
+        return efficiency;
+    }
+
+    public static void setEfficiency(long efficiency) {
+        Stats.efficiency = efficiency;
+    }
+
+    public static long getAverageEfficiency() {
+        return averageEfficiency;
+    }
+
+    public static void setAverageEfficiency(long averageEfficiency) {
+        Stats.averageEfficiency = averageEfficiency;
+    }
+
+    public static ArrayList<Long> getEfficiencies() {
+        return efficiencies;
+    }
+
+    public static void setEfficiencies(ArrayList<Long> efficiencies) {
+        Stats.efficiencies = efficiencies;
+    }
+
     public void ComputeAverages(){
         // Average Transmission In Size
         for(int i = 0; i < transmissionInSizes.size(); i++){
@@ -116,6 +149,13 @@ public class Stats {
         }
         averageTransmissionTime /= transmissionTimes.size();
 
+        //Calculate Efficiency (chars/ms)
+        for(int i = 0; i < efficiencies.size(); i++){
+            averageEfficiency += efficiencies.get(i);
+        }
+        averageEfficiency /= efficiencies.size();
+
+
     }
 
     @Override
@@ -132,7 +172,9 @@ public class Stats {
 
             writer.append(getAverageTransmissionTime() + ",");
 
-            writer.append(getConnectionTime()+"");
+            writer.append(getConnectionTime() + ",");
+
+            writer.append(getAverageEfficiency() + "");
 
             writer.flush();
             writer.close();
@@ -146,6 +188,7 @@ public class Stats {
                 "Average Transmission In Size: " + getAverageTransmissionInSize() + " chars.\n" +
                 "Average Transmission Out Size: " + getAverageTransmissionOutSize() +  " chars.\n" +
                 "Average Transmission Time: " + getAverageTransmissionTime() +  " ms.\n" +
+                "Average Efficiency: " + getAverageEfficiency() +  " ms.\n" +
                 "}";
     }
 }
