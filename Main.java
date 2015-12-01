@@ -31,15 +31,15 @@ public class Main{
 
     public static void main( String [] args ) throws IOException {
         System.out.println("Thank you for running the Client/Server Manager");
-        System.out.println("What would you like to run? ('(r)outer', '(s)erver'/ (s100), or '(c)lient'/ (c100) )");
+        System.out.println("What would you like to run? ('(r)outer', '(s)erver'/ (s50), or '(c)lient'/ (c50) )");
 
         in = new Scanner(System.in);
         user = in.nextLine();
         int answer = -1;
 
         if(user.startsWith("r")) answer = 0;
-        else if (user.startsWith("s100")) answer = 3;
-        else if (user.startsWith("c100")) answer = 4;
+        else if (user.startsWith("s50")) answer = 3;
+        else if (user.startsWith("c50")) answer = 4;
         else if (user.startsWith("s")) answer = 1;
         else if (user.startsWith("c")) answer = 2;
 
@@ -55,10 +55,10 @@ public class Main{
                 client();
                 break;
             case 3:
-                server100();
+                server50();
                 break;
             case 4 :
-                client100();
+                client50();
                 break;
             default :
                 System.out.println("I don't understand! BYE!!!");
@@ -100,9 +100,9 @@ public class Main{
     }
 
 
-    private static void server100() throws IOException {
-        for(int i = 0; i < 100; i++){
-            System.out.println("Running Server100...");
+    private static void server50() throws IOException {
+        for(int i = 0; i < 50; i++){
+            System.out.println("Running Server50...");
 
             String SERVER_ROUTER_NAME = ip;
 
@@ -111,9 +111,9 @@ public class Main{
         }
     }
 
-    private static void client100() throws IOException {
-        for(int i = 0; i < 100; i++){
-            System.out.println("Running Client100...");
+    private static void client50() throws IOException {
+        for(int i = 0; i < 50; i++){
+            System.out.println("Running Client50...");
 
             String SERVER_ROUTER_NAME = ip;
             String INPUT_FILE = inputFile;
