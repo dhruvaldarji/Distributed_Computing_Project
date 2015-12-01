@@ -20,8 +20,8 @@ public class Main{
 
     /*********************************************************/
     /** Default IPs and Ports for this instance. **/
-    public static String ip = dhruvalIP;
-    public static int port = dhruvalPort;
+    public static String ip = deionIP;
+    public static int port = deionPort;
     /*********************************************************/
 
     /*********************************************************/
