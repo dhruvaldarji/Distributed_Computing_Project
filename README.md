@@ -6,7 +6,7 @@ For Phase 2 of this project we designed and implemented a Peer-to-Peer system. T
 
 #### Classes
 * Main
-    ** Our main class allows the users access to a very simple interface that allows them to run a router, a server or a client. The server and client runs have the option to be run 50 times each as well. The main class allows the user to pre-setup a subnet list with IP's of known routers, as well as ports. Additionally, once the routers are configured, the user's can select names for the clients and server that they would like to connect to. 
+    * Our main class allows the users access to a very simple interface that allows them to run a router, a server or a client. The server and client runs have the option to be run 50 times each as well. The main class allows the user to pre-setup a subnet list with IP's of known routers, as well as ports. Additionally, once the routers are configured, the user's can select names for the clients and server that they would like to connect to. 
 
 * TCPServerRouter
 
