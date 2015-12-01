@@ -76,9 +76,9 @@ public class Main{
 
         HashMap<String, RoutingInfo> subnetList = new HashMap<>();
 
-        subnetList.put("R1", new RoutingInfo(null, dhruvalIP, 5555, "R1", true));
-        subnetList.put("R2", new RoutingInfo(null, deionIP, 5556, "R2", true));
-        subnetList.put("R3", new RoutingInfo(null, mirelaIP, 5557, "R3", true));
+        subnetList.put("R1", new RoutingInfo(null, dhruvalIP, dhruvalPort, "R1", true));
+        subnetList.put("R2", new RoutingInfo(null, deionIP, deionPort, "R2", true));
+        subnetList.put("R3", new RoutingInfo(null, mirelaIP, mirelaPort, "R3", true));
 
         router = new TCPServerRouter(port, subnetList);
         router.run();
