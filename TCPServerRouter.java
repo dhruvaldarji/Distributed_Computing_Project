@@ -22,6 +22,7 @@ public class TCPServerRouter {
     /**
      * Constructor
      * @param port : Port
+     * @param SubnetList : The list of routers in the known subnet
      */
     public TCPServerRouter(int port, HashMap<String, RoutingInfo> SubnetList){
         clientSocket = null; // socket for the thread
