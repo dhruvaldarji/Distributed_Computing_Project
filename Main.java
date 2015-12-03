@@ -8,9 +8,9 @@ public class Main{
     public static TCPServer server;
     public static TCPClient client;
 
-    public static String dhruvalIP = "10.99.1.221";
-    public static String deionIP = "10.99.30.7";
-    public static String mirelaIP = "10.99.16.205";
+    public static String dhruvalIP = "10.99.14.53";
+    public static String deionIP = "10.99.1.54";
+    public static String mirelaIP = "10.99.19.229";
 
     public static int dhruvalPort = 5555;
     public static int deionPort = 5555;
@@ -19,9 +19,9 @@ public class Main{
     public static String inputFile = "src/bobrossquotes.txt";
 
     /*********************************************************/
-    /** Default IPs and Ports for this instance. **/
-    public static String ip = deionIP;
-    public static int port = deionPort;
+    /** Default IPs and Ports for the router. **/
+    public static String ip = dhruvalIP;
+    public static int port = dhruvalPort;
     /*********************************************************/
 
     /*********************************************************/
@@ -34,7 +34,7 @@ public class Main{
     private static String user = "";
 
     public static void main( String [] args ) throws IOException {
-        System.out.println("Thank you for running the Client/Server Manager");
+        System.out.println("Thank you for running the Bob Ross P2P Manager");
         System.out.println("What would you like to run? ('(r)outer', '(s)erver'/ (s50), or '(c)lient'/ (c50) )");
 
         in = new Scanner(System.in);
